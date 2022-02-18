@@ -19,7 +19,7 @@ class SourceStack extends TerraformStack {
     });
 
     new local.File(this, "file", {
-      filename: "../../../origin-file.txt",
+      filename: "./fixtures/origin-file.txt",
       content: this.password.result,
     });
 
