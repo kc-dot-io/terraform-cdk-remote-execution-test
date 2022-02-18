@@ -47,7 +47,7 @@ class SourceStack extends TerraformStack {
 
     new RemoteBackend(this, {
       hostname: 'app.terraform.io',
-      organization: 'kc-dot-io',
+      organization: process.env.TFC_ORG || 'kc-dot-io',
       workspaces: {
         name: 'workspaceA'
       }
@@ -72,7 +72,7 @@ class ConsumerStack extends TerraformStack {
 
     new RemoteBackend(this, {
       hostname: 'app.terraform.io',
-      organization: 'kc-dot-io',
+      organization: process.env.TFC_ORG || 'kc-dot-io',
       workspaces: {
         name: 'workspaceB'
       }
