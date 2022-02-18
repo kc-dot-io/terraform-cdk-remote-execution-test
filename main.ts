@@ -8,11 +8,11 @@ class SourceStack extends TerraformStack {
 
     this.password = 'THIS IS THE VALUE'
 
-    new TerraformOutput(app, "output", {
+    new TerraformOutput(this, "output", {
       value: "constant value",
     });
 
-    new RemoteBackend(app, {
+    new RemoteBackend(this, {
       hostname: 'app.terraform.io',
       organization: 'kc-dot-io',
       workspaces: {
@@ -26,11 +26,11 @@ class ConsumerStack extends TerraformStack {
   constructor(scope: Construct, name: string, password: any) {
     super(scope, name);
 
-    new TerraformOutput(app, "password", {
+    new TerraformOutput(this, "password", {
       value: password
     })
 
-    new RemoteBackend(app, {
+    new RemoteBackend(this, {
       hostname: 'app.terraform.io',
       organization: 'kc-dot-io',
       workspaces: {
