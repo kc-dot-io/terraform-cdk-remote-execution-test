@@ -1,11 +1,18 @@
 import { Construct } from "constructs";
-import { App, TerraformStack, RemoteBackend } from "cdktf";
+import { App, TerraformStack, RemoteBackend, TerraformOutput } from "cdktf";
 
-class WorkspaceA extends TerraformStack {
+class SourceStack extends TerraformStack {
+  public password: any;
   constructor(scope: Construct, name: string) {
     super(scope, name);
 
-    new RemoteBackend(this, {
+    this.password = 'THIS IS THE VALUE'
+
+    new TerraformOutput(app, "output", {
+      value: "constant value",
+    });
+
+    new RemoteBackend(app, {
       hostname: 'app.terraform.io',
       organization: 'kc-dot-io',
       workspaces: {
@@ -15,11 +22,15 @@ class WorkspaceA extends TerraformStack {
   }
 }
 
-class WorkspaceB extends TerraformStack {
-  constructor(scope: Construct, name: string, workspace: any) {
+class ConsumerStack extends TerraformStack {
+  constructor(scope: Construct, name: string, password: any) {
     super(scope, name);
 
-    new RemoteBackend(this, {
+    new TerraformOutput(app, "password", {
+      value: password
+    })
+
+    new RemoteBackend(app, {
       hostname: 'app.terraform.io',
       organization: 'kc-dot-io',
       workspaces: {
@@ -31,6 +42,6 @@ class WorkspaceB extends TerraformStack {
 }
 
 const app = new App();
-const a = new WorkspaceA(app, "workspaceA");
-new WorkspaceB(app, "workspaceB", a);
+const a = new SourceStack(app, "workspaceA");
+new ConsumerStack(app, "workspaceB", a.password);
 app.synth();
