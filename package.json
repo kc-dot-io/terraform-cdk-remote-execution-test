@@ -21,8 +21,7 @@
   },
   "dependencies": {
     "cdktf": "file:../terraform-cdk/dist/js/cdktf@0.0.0.jsii.tgz",
-    "constructs": "^10.0.65",
-    "path": "^0.12.7"
+    "constructs": "^10.0.68"
   },
   "devDependencies": {
     "@types/jest": "^27.4.0",
